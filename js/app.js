@@ -1,12 +1,48 @@
-$.ajax({
-  url: 'https://api.flickr.com/services/feeds/photos_public.gne',
-  dataType: 'json',
-  success: function (data) {
-    console.log(data);
-  }
+function createDirectory(index, image, fullName, username, city, country) {
+  let cardSetup = '<div class="employee"><a href="#" data-toggle="modal"';
+  let dataTarget = 'data-target="#myModal' + index + '">';
+  let picture = '<img src="' + image + '" width="120" height="120" class="image img-circle"><div class="data">';
+  let nameP = '<p class="name">' + fullName + '</p>';
+  let usernameP = '<p class="username">' + username + '</p>';
+  let cityP = '<p class="city">' + city + ', ' + country + '</p></div></a></div>';
 
-})
+  return cardSetup + dataTarget + picture + nameP + usernameP + nameP
+}
 
+function leftOrRight() {
+  $('.modal').each(function(){
+    let currentModal = $(this);
+    //click next
+    currentModal.find('.btn-next').click(function(){
+      currentModal.modal('hide');
+      currentModal.closest('.modal').nextAll('.modal').first().modal('show'); 
+    });
+    //click prev
+    currentModal.find('.btn-prev').click(function(){
+      currentModal.modal('hide');
+      currentModal.closest('.modal').prevAll('.modal').first().modal('show');
+    });
+  });
+}
+
+function createModal(index, image, fullName, email, city, username, telephone, address, birthday) {
+  let modalSetup = '<div class="modal fade" id="myModal' + index + '" tabindex="-1" role="dialog" aria-hidden="false"><div class="modal-dialog" role="document"><div class="modal-content">';
+  let modalHeader = '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></div><div class="modal-body">';
+  let modalImage = '<img src="' + image + '" width="190" height="190" class="img-circle">';
+  let modalName = '<h3 class="modal-title"><b>Full Name :</b> ' + fullName + '</h3>';
+  let modalEmail = '<p class="modal-title"><b>Email : </b>' + email + '</p>';
+  let modalCity = '<p class="modal-title"><b>City : </b>' + city + '</p><hr>';
+  let modalUsername = '<p class="modal-title"><b>Username : </b>' + username + '</p>';
+  let modalTelephone = '<p class="modal-title"><b>Cell : </b>' + telephone + '</p>';
+  let modalAddress = '<p class="modal-title"><b>Address : </b>' + address + '</p>';
+  let modalBirthday = '<p class="modal-title"><b>Birthday : </b>' + birthday + '</p></div>';
+  let modalFooter = '<div class="modal-footer">';
+  let leftButton = '<button type="button" <a href="#" id="leftButton" class="btn btn-info btn-prev" data-toggle="modal data-target="#myModal' + (index - 1) + '">Left</a></button>';
+  let rightButton = '<button type="button" <a href="#" id="rightButton" class="btn btn-info btn-next" data-toggle="modal data-target="#myModal' + (index + 1) + '">Right</a></button>';
+  let closeButton = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div></div>';
+  leftOrRight();
+  return modalSetup + modalHeader + modalImage + modalName + modalEmail + modalCity + modalUsername + modalTelephone + modalAddress + modalBirthday + modalFooter + leftButton + rightButton + closeButton
+}
 
 $.ajax({
   url: 'https://randomuser.me/api/?results=12',
@@ -28,13 +64,22 @@ $.ajax({
       address = employees[index].location.street + ' ' + city + ' ' + employees[index].location.state + ', ' + country + employees[index].location.postcode;
       birthday = employees[index].dob;
 
-        fullWrapper = '<div class="employee"><a href="#" data-toggle="modal" data-target="#myModal' + 
-          index + '"><img  src="' + image + '" width="120" height="120" class="image img-circle"><div class="data"><p class="name">' + fullName + '</p><p class="username">' + username + '</p><p class="city" >' + city + ', ' + country + '</p></div></div></a>';
-          modal = '<div class="modal fade" id="myModal' + index + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></button></div><div class="modal-body"><img src="' + image + '" width="190" height="190" class="img-circle"><h3 class="modal-title" id="exampleModalLabel"><b>Full Name :</b> ' + fullName + '</h3><p class="modal-title" id="exampleModalLabel"><b>Email :</b> ' + email + '</p><p class="modal-title" id="exampleModalLabel"><b>City :</b> ' + city + '</p><p class="modal-title" id="exampleModalLabel"><b>Username :</b> ' + username + '</p><hr><p class="modal-title" id="exampleModalLabel"><b>Cell :</b> ' + telephone + '</p><p class="modal-title" id="exampleModalLabel"><b>Address :</b> ' + address + '</p><p class="modal-title" id="exampleModalLabel"><b>DOB :</b> ' + birthday + '</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary" id="alertButton">Send Alert</button></div></div></div></div>';
+        fullWrapper = createDirectory(index, image, fullName, username, city, country);
+
+        fullModal = createModal(index, image, fullName, email, city, username, telephone, address, birthday);
+
         $('#wrapper').append(fullWrapper);
-        $('#wrapper').append(modal);
+        $('#wrapper').append(fullModal);
+        // if(name.length > 15) {
+        //   $('.name').style.fontSize = '1.1rem';
+        // } 
+        // if(city.length > 15) {
+        //     $('.city').style.fontSize = '1rem';
+        // }
     })
   }
 });
+
+
 
 //console.log('');

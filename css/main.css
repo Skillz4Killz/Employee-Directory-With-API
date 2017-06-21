@@ -38,20 +38,50 @@
 .username {
 	color: gray;
 	background-color: white;
-
 }
 
-.modal {
-	margin: 5% 30%;
+.city {
+	font-size: 1.2rem;
 }
+
+
 .modal img,
 .modal-title, 
 .model-content {
 	margin: 0% 30% 10% 30%;
 	text-align: center;
+	
 }
 
 #title {
 	text-align: center;
+}
 
+/* ----------- 13inch Macbook pro ----------- */
+@media (max-device-width: 1024px){ 
+
+}
+
+/* ----------- Non-Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 1) { 
+  	.data {
+		font-size: 1.5rem;
+}
+.name {
+	font-size: 1.5rem;
+}
+.city {
+	font-size: 1.5rem;
+}
+}
+
+/* ----------- Retina Screens ----------- */
+@media screen 
+  and (min-device-width: 1200px) 
+  and (max-device-width: 1600px) 
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (min-resolution: 192dpi) { 
 }
