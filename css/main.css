@@ -1,0 +1,53 @@
+
+
+.employee {
+	padding: 10px 10px 10px 10px;
+	margin: 10px 0px 10px 30px;
+	
+	display: inline-block;
+
+	border-radius: 22px 22px 22px 22px;
+		-moz-border-radius: 22px 22px 22px 22px;
+		-webkit-border-radius: 22px 22px 22px 22px;
+		border: 2px solid #353435;
+
+	width: 30%;
+	background-color: white;
+}
+
+.employee:hover {
+
+}
+
+.image {
+	margin-left: 30px;
+}
+.data {
+	background-color: white;
+	display: inline-block;
+	padding-left: 50px
+
+}
+
+.name {
+	background-color: white;
+	font-weight: bold;
+}
+
+.email,
+.city,
+.username {
+	color: gray;
+	background-color: white;
+
+}
+
+.modal {
+	margin: 5% 30%;
+}
+.modal img,
+.modal-title, 
+.model-content {
+	margin: 0% 30% 10% 30%;
+	text-align: center;
+}
