@@ -43,6 +43,7 @@ function createModal(index, image, fullName, email, city, username, telephone, a
   leftOrRight();
   return modalSetup + modalHeader + modalImage + modalName + modalEmail + modalCity + modalUsername + modalTelephone + modalAddress + modalBirthday + modalFooter + leftButton + rightButton + closeButton
 }
+let searchArray = [];
 
 $.ajax({
   url: 'https://randomuser.me/api/?results=12',
@@ -50,6 +51,7 @@ $.ajax({
   success: function(data) {
     let employees = data.results;
     let image, fullName, email, city, username, fullWrapper, modal, telephone, address, birthday, country;
+    
     function capitalize(name) {
     	return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     }
@@ -63,6 +65,10 @@ $.ajax({
       telephone = employees[index].cell;
       address = employees[index].location.street + ' ' + city + ' ' + employees[index].location.state + ', ' + country + employees[index].location.postcode;
       birthday = employees[index].dob;
+
+      searchArray.push(fullName);
+      searchArray.push(username);
+      console.log(searchArray);
 
         fullWrapper = createDirectory(index, image, fullName, username, city, country);
 
@@ -87,9 +93,15 @@ const search = $('#searchBar');
 const buttonSearch = $('#searchButton');
 
 buttonSearch.click(function(event) {
-  let searchWord = search.value;
-  console.log(searchWord);
-  search.value = '';
+  let searchWord = search.val();
+  search.val('');
+  $.each(searchArray, function(index, el) {
+    if (searchArray[index].indexOf('searchWord') < 0) {
+      $('.employee[index]').hide();
+    }
+    
+  });
+
 });
 
 
