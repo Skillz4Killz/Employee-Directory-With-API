@@ -57,6 +57,17 @@
 	text-align: center;
 }
 
+#selectbasic {
+	display: inline-block;
+}
+
+#searchButton {
+	display: inline-block;
+}
+
+input {
+	display: inline-block;
+}
 /* ----------- 13inch Macbook pro ----------- */
 @media (max-device-width: 1024px){ 
 

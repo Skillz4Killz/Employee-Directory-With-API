@@ -6,7 +6,7 @@ function createDirectory(index, image, fullName, username, city, country) {
   let usernameP = '<p class="username">' + username + '</p>';
   let cityP = '<p class="city">' + city + ', ' + country + '</p></div></a></div>';
 
-  return cardSetup + dataTarget + picture + nameP + usernameP + nameP
+  return cardSetup + dataTarget + picture + nameP + usernameP + cityP
 }
 
 function leftOrRight() {
@@ -80,6 +80,17 @@ $.ajax({
   }
 });
 
+//search feature
+
+const selection = $('#selectbasic');
+const search = $('#searchBar');
+const buttonSearch = $('#searchButton');
+
+buttonSearch.click(function(event) {
+  let searchWord = search.value;
+  console.log(searchWord);
+  search.value = '';
+});
 
 
 //console.log('');
