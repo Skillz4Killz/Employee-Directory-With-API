@@ -12,15 +12,48 @@ function person(url, fullName, dob, user, place, homeland, mail, cell, home) {
 }
 //array to hold all objects of all employees
 let employeesList = [];
+let image, fullName, email, city, username, fullWrapper, modal, telephone, address, birthday, country, fullModal, card;
+//create dyname name font-size by checking length of characters
+function dynamicNameFont(fullName) {
+    if (fullName.length > 14)  {
+      let nameSet = '<p class="name name-small">' + fullName + '</p>';
+      return nameSet
+    } else {
+      let nameSet = '<p class="name">' + fullName + '</p>';
+      return nameSet
+    }
+  }
+//create dynamic font-size by checking length of characters for City
+function dynamicCityFont(city) {
+  if (city.length > 12) {
+    let citySet = '<p class="city city-small">' + city + ', ' + country + '</p></div></a></div>';
+    return citySet
+  } else if (city.length > 18) {
+    let citySet = '<p class="city city-super-small">' + city + ', ' + country + '</p></div></a></div>';
+    return citySet
+  } else {
+    let citySet = '<p class="city">' + city + ', ' + country + '</p></div></a></div>';
+    return citySet
+  }
+}
+//create dynamic username font-size by checking length of character for Username
+function dynamicUsernameFont(username) {
+  if (username.length > 18) {
+    let usernameSet = '<p class="username username-small">' + username + '</p>';
+    return usernameSet
+  } else {
+    let usernameSet = '<p class="username">' + username + '</p>';
+    return usernameSet
+  }
+}
 //create the card using all necessary information when called and return so it can print
 function createDirectory(index, image, fullName, username, city, country) {
   let cardSetup = '<div class="employee"><a href="#" data-toggle="modal"';
   let dataTarget = 'data-target="#myModal' + index + '">';
   let picture = '<img src="' + image + '" width="120" height="120" class="image img-circle"><div class="data">';
-  let nameP = '<p class="name">' + fullName + '</p>';
-  let usernameP = '<p class="username">' + username + '</p>';
-  let cityP = '<p class="city">' + city + ', ' + country + '</p></div></a></div>';
-
+  let nameP = dynamicNameFont(fullName);
+  let usernameP = dynamicUsernameFont(username);
+  let cityP = dynamicCityFont(city);
   return cardSetup + dataTarget + picture + nameP + usernameP + cityP
 }
 //function to make a modal for each employee with unique id tag and proper format, add buttons to switch left and right.
@@ -59,55 +92,58 @@ function leftOrRight() {
   });
 }
 
-let image, fullName, email, city, username, fullWrapper, modal, telephone, address, birthday, country, fullModal, card;
-
+//capitalize the name first letter
 function capitalize(name) {
       return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     }
-
+//make ajax call to get back 12 employees in json format
 $.ajax({
-  url: 'https://randomuser.me/api/?results=12',
+  url: 'https://randomuser.me/api/?results=12&nat=US',
   dataType: 'json',
   success: function(data) {
     let employees = data.results;
-    
+//for loop to take each employees data and save each necessary one in proper format
     $.each(employees, function (index, value) {
     	fullName = capitalize(employees[index].name.first) + ' ' + capitalize(employees[index].name.last);
     	email = employees[index].email;
       city = capitalize(employees[index].location.city);
       country = employees[index].nat;
       username = employees[index].login.username;
-    	image = employees[index].picture.thumbnail;
+//the image is of large and not thumbnail as requirements state because it is too blurry as the thumbnail is small size for better UX i change it to thumbnail, for grading purposes please know that it would be the commented line below.
+//    image = employees[index].picture.thumbnail;
+    	image = employees[index].picture.large;
       telephone = employees[index].cell;
       address = employees[index].location.street + ' ' + city + ' ' + employees[index].location.state + ', ' + country + employees[index].location.postcode;
       birthday = employees[index].dob;
-
+//create a player object in each loop using all the necessary var to save all the values.
       employeesList.push(new person(image, fullName, birthday, username, city, country, email, telephone, address));
-
+//call the functons to make the html necessary for each employee
       fullWrapper = createDirectory(index, image, fullName, username, city, country);
       fullModal = createModal(index, image, fullName, email, city, username, telephone, address, birthday);
-
+//print html
         $('#wrapper').append(fullWrapper);
         $('#wrapper').append(fullModal);
-        
-    })
+    })//loop ends
+//save employee html collection in card for search function
 card = document.getElementsByClassName('employee');
   }
 });
-
+//create var necessary for search function
 const $search = $('#searchBar');
 const buttonSearch = document.getElementById('searchButton');
-
+//cancel the submit function in input element
 $search.submit(function(event) {
   event.preventDefault();
 });
-
+//button event listenere to search or reset the cards filtered by search value
 buttonSearch.addEventListener('click', () => {
   let searchWord = $search.value.toLowerCase();
   $search.value = '';
+//hide all
   for (let i = 0; i < employeesList.length; i++ ) {
     card[i].style.display = 'none';
   }
+//show only those meeting filter requirement
   for (let i = 0; i < employeesList.length; i++) {
     let testName = employeesList[i].fullName.toLowerCase();
      testName = testName.indexOf(searchWord);
@@ -117,4 +153,3 @@ buttonSearch.addEventListener('click', () => {
     }
   }
 })
-

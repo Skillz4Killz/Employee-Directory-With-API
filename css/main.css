@@ -68,31 +68,19 @@
 input {
 	display: inline-block;
 }
-/* ----------- 13inch Macbook pro ----------- */
-@media (max-device-width: 1024px){ 
 
-}
-
-/* ----------- Non-Retina Screens ----------- */
-@media screen 
-  and (min-device-width: 1200px) 
-  and (max-device-width: 1600px) 
-  and (-webkit-min-device-pixel-ratio: 1) { 
-  	.data {
-		font-size: 1.5rem;
-}
-.name {
-	font-size: 1.5rem;
-}
-.city {
-	font-size: 1.5rem;
-}
+.city-small {
+	font-size: 1.2rem;
 }
 
-/* ----------- Retina Screens ----------- */
-@media screen 
-  and (min-device-width: 1200px) 
-  and (max-device-width: 1600px) 
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (min-resolution: 192dpi) { 
+.city-super-small {
+	font-size: .9rem;
+}
+.name-small {
+	font-size: 1.3rem;
+	padding-top: 10px;
+}
+
+.username-small {
+	font-size: 1.2rem;
 }
