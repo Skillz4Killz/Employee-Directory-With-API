@@ -1,3 +1,4 @@
+//create employee object to hold all data from each user whenever called
 function person(url, fullName, dob, user, place, homeland, mail, cell, home) {
     this.image = url;
     this.fullName = fullName;
@@ -9,10 +10,9 @@ function person(url, fullName, dob, user, place, homeland, mail, cell, home) {
     this.telephone = cell;
     this.address = home;
 }
-
+//array to hold all objects of all employees
 let employeesList = [];
-let searchArray = [];
-
+//create the card using all necessary information when called and return so it can print
 function createDirectory(index, image, fullName, username, city, country) {
   let cardSetup = '<div class="employee"><a href="#" data-toggle="modal"';
   let dataTarget = 'data-target="#myModal' + index + '">';
@@ -23,7 +23,7 @@ function createDirectory(index, image, fullName, username, city, country) {
 
   return cardSetup + dataTarget + picture + nameP + usernameP + cityP
 }
-
+//function to make a modal for each employee with unique id tag and proper format, add buttons to switch left and right.
 function createModal(index, image, fullName, email, city, username, telephone, address, birthday) {
   let modalSetup = '<div class="modal fade" id="myModal' + index + '" tabindex="-1" role="dialog" aria-hidden="false"><div class="modal-dialog" role="document"><div class="modal-content">';
   let modalHeader = '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></div><div class="modal-body">';
@@ -42,19 +42,19 @@ function createModal(index, image, fullName, email, city, username, telephone, a
   leftOrRight();
   return modalSetup + modalHeader + modalImage + modalName + modalEmail + modalCity + modalUsername + modalTelephone + modalAddress + modalBirthday + modalFooter + leftButton + rightButton + closeButton
 }
-
+//function to allow changing left and right of modals
 function leftOrRight() {
   $('.modal').each(function(){
-    let currentModal = $(this);
+    let current = $(this);
     //click next
-    currentModal.find('.btn-next').click(function(){
-      currentModal.modal('hide');
-      currentModal.closest('.modal').nextAll('.modal').first().modal('show'); 
+    current.find('.btn-next').click(function(){
+      current.modal('hide');
+      current.closest('.modal').nextAll('.modal').first().modal('show'); 
     });
     //click prev
-    currentModal.find('.btn-prev').click(function(){
-      currentModal.modal('hide');
-      currentModal.closest('.modal').prevAll('.modal').first().modal('show');
+    current.find('.btn-prev').click(function(){
+      current.modal('hide');
+      current.closest('.modal').prevAll('.modal').first().modal('show');
     });
   });
 }
@@ -82,10 +82,6 @@ $.ajax({
       address = employees[index].location.street + ' ' + city + ' ' + employees[index].location.state + ', ' + country + employees[index].location.postcode;
       birthday = employees[index].dob;
 
-      searchArray.push(employees[index].name.first.toLowerCase());
-      searchArray.push(employees[index].name.last.toLowerCase());
-      searchArray.push(username.toLowerCase());
-
       employeesList.push(new person(image, fullName, birthday, username, city, country, email, telephone, address));
 
       fullWrapper = createDirectory(index, image, fullName, username, city, country);
@@ -96,34 +92,19 @@ $.ajax({
         
     })
 card = document.getElementsByClassName('employee');
-
-    // const $selection = $('#selectbasic');
-    // const $search = $('#searchBar');
-    // const $buttonSearch = $('#searchButton');
-    // const $employee = $('.employee');
-
-    // $buttonSearch.click(function(event) {
-    //   let searchWord = $search.val().toLowerCase();
-    //   $search.val('');
-    //   let $employee = $('.emoloyee');
-    //   $.each(searchArray, function ( index, element ) {
-    //     let testString = searchArray.indexOf(searchWord);
-    //     console.log(testString);
-    //     if (testString < 0) {
-    //       console.log('inside if');
-    //       $employee.hide();
-    //     }
-    //   });
-    // }); 
   }
 });
 
-const search = document.getElementById('searchBar');
+const $search = $('#searchBar');
 const buttonSearch = document.getElementById('searchButton');
 
+$search.submit(function(event) {
+  event.preventDefault();
+});
+
 buttonSearch.addEventListener('click', () => {
-  let searchWord = search.value.toLowerCase();
-  search.value = '';
+  let searchWord = $search.value.toLowerCase();
+  $search.value = '';
   for (let i = 0; i < employeesList.length; i++ ) {
     card[i].style.display = 'none';
   }
@@ -136,3 +117,4 @@ buttonSearch.addEventListener('click', () => {
     }
   }
 })
+
