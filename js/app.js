@@ -12,69 +12,10 @@ function person(url, fullName, dob, user, place, homeland, mail, cell, home) {
 }
 //array to hold all objects of all employees
 let employeesList = [];
+const info = $('.modal-title');
+
 let image, fullName, email, city, username, fullWrapper, modal, telephone, address, birthday, country, fullModal, card;
-//create dyname name font-size by checking length of characters
-function dynamicNameFont(fullName) {
-    if (fullName.length > 14)  {
-      let nameSet = '<p class="name name-small">' + fullName + '</p>';
-      return nameSet
-    } else {
-      let nameSet = '<p class="name">' + fullName + '</p>';
-      return nameSet
-    }
-  }
-//create dynamic font-size by checking length of characters for City
-function dynamicCityFont(city) {
-  if (city.length > 12) {
-    let citySet = '<p class="city city-small">' + city + ', ' + country + '</p></div></a></div>';
-    return citySet
-  } else if (city.length > 18) {
-    let citySet = '<p class="city city-super-small">' + city + ', ' + country + '</p></div></a></div>';
-    return citySet
-  } else {
-    let citySet = '<p class="city">' + city + ', ' + country + '</p></div></a></div>';
-    return citySet
-  }
-}
-//create dynamic username font-size by checking length of character for Username
-function dynamicUsernameFont(username) {
-  if (username.length > 18) {
-    let usernameSet = '<p class="username username-small">' + username + '</p>';
-    return usernameSet
-  } else {
-    let usernameSet = '<p class="username">' + username + '</p>';
-    return usernameSet
-  }
-}
-//create the card using all necessary information when called and return so it can print
-function createDirectory(index, image, fullName, username, city, country) {
-  let cardSetup = '<div class="employee"><a href="#" data-toggle="modal"';
-  let dataTarget = 'data-target="#myModal' + index + '">';
-  let picture = '<img src="' + image + '" width="120" height="120" class="image img-circle"><div class="data">';
-  let nameP = dynamicNameFont(fullName);
-  let usernameP = dynamicUsernameFont(username);
-  let cityP = dynamicCityFont(city);
-  return cardSetup + dataTarget + picture + nameP + usernameP + cityP
-}
-//function to make a modal for each employee with unique id tag and proper format, add buttons to switch left and right.
-function createModal(index, image, fullName, email, city, username, telephone, address, birthday) {
-  let modalSetup = '<div class="modal fade" id="myModal' + index + '" tabindex="-1" role="dialog" aria-hidden="false"><div class="modal-dialog" role="document"><div class="modal-content">';
-  let modalHeader = '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></div><div class="modal-body">';
-  let modalImage = '<img src="' + image + '" width="190" height="190" class="img-circle">';
-  let modalName = '<h3 class="modal-title"><b>Full Name :</b> ' + fullName + '</h3>';
-  let modalEmail = '<p class="modal-title"><b>Email : </b>' + email + '</p>';
-  let modalCity = '<p class="modal-title"><b>City : </b>' + city + '</p><hr>';
-  let modalUsername = '<p class="modal-title"><b>Username : </b>' + username + '</p>';
-  let modalTelephone = '<p class="modal-title"><b>Cell : </b>' + telephone + '</p>';
-  let modalAddress = '<p class="modal-title"><b>Address : </b>' + address + '</p>';
-  let modalBirthday = '<p class="modal-title"><b>Birthday : </b>' + birthday + '</p></div>';
-  let modalFooter = '<div class="modal-footer">';
-  let leftButton = '<button type="button" <a href="#" id="leftButton" class="btn btn-info btn-prev" data-toggle="modal data-target="#myModal' + (index - 1) + '">Left</a></button>';
-  let rightButton = '<button type="button" <a href="#" id="rightButton" class="btn btn-info btn-next" data-toggle="modal data-target="#myModal' + (index + 1) + '">Right</a></button>';
-  let closeButton = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div></div>';
-  leftOrRight();
-  return modalSetup + modalHeader + modalImage + modalName + modalEmail + modalCity + modalUsername + modalTelephone + modalAddress + modalBirthday + modalFooter + leftButton + rightButton + closeButton
-}
+
 //function to allow changing left and right of modals
 function leftOrRight() {
   $('.modal').each(function(){
@@ -117,39 +58,114 @@ $.ajax({
       birthday = employees[index].dob;
 //create a player object in each loop using all the necessary var to save all the values.
       employeesList.push(new person(image, fullName, birthday, username, city, country, email, telephone, address));
-//call the functons to make the html necessary for each employee
-      fullWrapper = createDirectory(index, image, fullName, username, city, country);
-      fullModal = createModal(index, image, fullName, email, city, username, telephone, address, birthday);
-//print html
-        $('#wrapper').append(fullWrapper);
-        $('#wrapper').append(fullModal);
+
+// //print html
+//         $('#wrapper').append(fullWrapper);
+//         $('#wrapper').append(fullModal);
+        card = document.getElementsByClassName('employee');
+        
     })//loop ends
-//save employee html collection in card for search function
-card = document.getElementsByClassName('employee');
+
+//fill in the data for each employee card
+    const cardName = document.getElementsByClassName('name');
+    const cardUsername = document.getElementsByClassName('username');
+    const cardCity = document.getElementsByClassName('city');
+    const cardImage = document.getElementsByClassName('image');
+    const modalLink = document.getElementsByClassName('modalLink');
+
+    for (let i = 0; i < employeesList.length; i++) {
+      if (fullName.length > 14)  {
+        cardName[i].textContent = employeesList[i].fullName; 
+        cardName[i].className += ' name-small';
+      } else {
+        cardName[i].textContent = employeesList[i].fullName;
+      }
+      
+      if (username.length > 16) {
+        cardUsername[i].textContent = employeesList[i].username;
+        cardUsername[i].className += ' username-small';
+      } else {
+        cardUsername[i].textContent = employeesList[i].username;
+      }
+       
+     if (city.length > 12) {
+        cardCity[i].textContent = `${employeesList[i].city}, ${employeesList[i].country}`;
+        cardCity[i].className += ' city-small'
+      } else if (city.length > 18) {
+        cardCity[i].textContent = `${employeesList[i].city}, ${employeesList[i].country}`;
+        cardCity[i].className += ' city-super-small'
+      } else {
+        cardCity[i].textContent = `${employeesList[i].city}, ${employeesList[i].country}`;
+      }
+
+      cardImage[i].src = employeesList[i].image;
+
+        function makeModals(i) {
+          modalSetup[i].href = '#myModal' + i;
+          nameSpan.textContent = employeesList[i].fullName;
+          emailSpan.textContent = employeesList[i].email;
+          citySpan.textContent = employeesList[i].city;
+          usernameSpan.textContent = employeesList[i].username;
+          cellSpan.textContent = employeesList[i].telephone;
+          addressSpan.textContent = employeesList[i].address;
+          birthdaySpan.textContent = employeesList[i].birthday;
+          console.log(modalSetup[i]);
+          console.log(nameSpan);
+          console.log(emailSpan);
+          console.log(citySpan);
+          console.log(usernameSpan);
+          console.log(cellSpan);
+          console.log(addressSpan);
+          console.log(birthdaySpan);
+        }
+    //create modals for each card
+      card[i].addEventListener('click', () => {
+            makeModals(i);
+          })
+    }//end for loop for cards
   }
-});
+}); //end ajax call
+
+const modalSetup = document.getElementsByClassName('modalLink');
+const nameSpan = document.getElementsByClassName('nameSpan');
+const emailSpan = document.getElementsByClassName('emailSpan');
+const citySpan = document.getElementsByClassName('citySpan');
+const usernameSpan = document.getElementsByClassName('usernameSpan');
+const cellSpan = document.getElementsByClassName('cellSpan');
+const addressSpan = document.getElementsByClassName('addressSpan');
+const birthdaySpan = document.getElementsByClassName('birthdaySpan');
+
 //create var necessary for search function
-const $search = $('#searchBar');
+const search = document.getElementById('searchBar');
 const buttonSearch = document.getElementById('searchButton');
 //cancel the submit function in input element
-$search.submit(function(event) {
+$('.form-horizontal').submit(function(event) {
   event.preventDefault();
 });
-//button event listenere to search or reset the cards filtered by search value
+//search function
+search.addEventListener('keyup', () => {
+  let searchWord = search.value.toLowerCase();
+  //hide all
+    for (let i = 0; i < employeesList.length; i++ ) {
+      card[i].style.display = 'none';
+    }
+  //show only those meeting filter requirement
+    for (let i = 0; i < employeesList.length; i++) {
+      console.log(searchWord);
+      let testName = employeesList[i].fullName.toLowerCase();
+       testName = testName.indexOf(searchWord);
+      let testUsername = employeesList[i].username.indexOf(searchWord);
+      if (testName >= 0 || testUsername >= 0) {
+        card[i].style.display = '';
+      } 
+    }
+})
+
+// button event listenere to search or reset the cards filtered by search value
 buttonSearch.addEventListener('click', () => {
-  let searchWord = $search.value.toLowerCase();
-  $search.value = '';
-//hide all
+  search.value = '';
   for (let i = 0; i < employeesList.length; i++ ) {
-    card[i].style.display = 'none';
-  }
-//show only those meeting filter requirement
-  for (let i = 0; i < employeesList.length; i++) {
-    let testName = employeesList[i].fullName.toLowerCase();
-     testName = testName.indexOf(searchWord);
-    let testUsername = employeesList[i].username.indexOf(searchWord);
-    if (testName >= 0 || testUsername >= 0) {
       card[i].style.display = '';
     }
-  }
 })
+
