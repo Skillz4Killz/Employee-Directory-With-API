@@ -72,6 +72,14 @@ $.ajax({
     const cardCity = document.getElementsByClassName('city');
     const cardImage = document.getElementsByClassName('image');
     const modalLink = document.getElementsByClassName('modalLink');
+    const modalSetup = document.getElementsByClassName('modal');
+    const nameSpan = document.getElementsByClassName('nameSpan');
+    const emailSpan = document.getElementsByClassName('emailSpan');
+    const citySpan = document.getElementsByClassName('citySpan');
+    const usernameSpan = document.getElementsByClassName('usernameSpan');
+    const cellSpan = document.getElementsByClassName('cellSpan');
+    const addressSpan = document.getElementsByClassName('addressSpan');
+    const birthdaySpan = document.getElementsByClassName('birthdaySpan');
 
     for (let i = 0; i < employeesList.length; i++) {
       if (fullName.length > 14)  {
@@ -100,40 +108,44 @@ $.ajax({
 
       cardImage[i].src = employeesList[i].image;
 
-        function makeModals(i) {
-          modalSetup[i].href = '#myModal' + i;
-          nameSpan.textContent = employeesList[i].fullName;
-          emailSpan.textContent = employeesList[i].email;
-          citySpan.textContent = employeesList[i].city;
-          usernameSpan.textContent = employeesList[i].username;
-          cellSpan.textContent = employeesList[i].telephone;
-          addressSpan.textContent = employeesList[i].address;
-          birthdaySpan.textContent = employeesList[i].birthday;
-          console.log(modalSetup[i]);
-          console.log(nameSpan);
-          console.log(emailSpan);
-          console.log(citySpan);
-          console.log(usernameSpan);
-          console.log(cellSpan);
-          console.log(addressSpan);
-          console.log(birthdaySpan);
-        }
+        // function makeModals(i) {
+        //   nameSpan.textContent = employeesList[i].fullName;
+        //   emailSpan.textContent = employeesList[i].email;
+        //   citySpan.textContent = employeesList[i].city;
+        //   usernameSpan.textContent = employeesList[i].username;
+        //   cellSpan.textContent = employeesList[i].telephone;
+        //   addressSpan.textContent = employeesList[i].address;
+        //   birthdaySpan.textContent = employeesList[i].birthday;
+        //   console.log(modalSetup[i]);
+        //   console.log(nameSpan);
+        //   console.log(emailSpan);
+        //   console.log(citySpan);
+        //   console.log(usernameSpan);
+        //   console.log(cellSpan);
+        //   console.log(addressSpan);
+        //   console.log(birthdaySpan);
+        // }
     //create modals for each card
       card[i].addEventListener('click', () => {
-            makeModals(i);
+        const innerModal = document.getElementById('pasteDataHere');
+          let modalData = `<div class="modal-body">
+              <img src="${employeesList[i].image}" width="190" height="190" class="img-circle">
+              <h3 class="modal-title"><b>Full Name :</b><span class="nameSpan">${employeesList[i].fullName}</span></h3>
+              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[i].email}</span></p>
+              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[i].city}</span></p><hr>
+              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[i].username}</span></p>
+              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[i].telephone}</p>
+              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[i].address}</span></p>
+              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[i].birthday}</span></p>
+            </div>`
+            console.log(innerModal);
+            innerModal.innerHTML = modalData;
           })
     }//end for loop for cards
   }
 }); //end ajax call
 
-const modalSetup = document.getElementsByClassName('modalLink');
-const nameSpan = document.getElementsByClassName('nameSpan');
-const emailSpan = document.getElementsByClassName('emailSpan');
-const citySpan = document.getElementsByClassName('citySpan');
-const usernameSpan = document.getElementsByClassName('usernameSpan');
-const cellSpan = document.getElementsByClassName('cellSpan');
-const addressSpan = document.getElementsByClassName('addressSpan');
-const birthdaySpan = document.getElementsByClassName('birthdaySpan');
+
 
 //create var necessary for search function
 const search = document.getElementById('searchBar');
