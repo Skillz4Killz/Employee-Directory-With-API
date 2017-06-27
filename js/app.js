@@ -83,7 +83,7 @@ $.ajax({
     }//end for loop for cards
     const goBack = document.getElementById('leftButton');
       const goNext = document.getElementById('rightButton');
-      let nameTest, nameTestMatch;
+      let nameTest, nameTestMatch, counter;
     for (let i=0; i < 12; i++) {
       //create modals for each card
       card[i].addEventListener('click', () => {
@@ -120,8 +120,10 @@ $.ajax({
               <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[i-1].birthday}</span></p>
             </div>`
             innerModal.innerHTML = modalData;
+            counter = i - 1;
           }
         } 
+        nameTest = employeesList[counter].fullName;
       })
 
     goNext.addEventListener('click', () => {
@@ -140,8 +142,10 @@ $.ajax({
               <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[i+1].birthday}</span></p>
             </div>`
             innerModal.innerHTML = modalData;
+            counter = i + 1;
           }
         } 
+        nameTest = employeesList[counter].fullName; 
       })
 
   }
