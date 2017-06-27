@@ -21,7 +21,6 @@ function capitalize(name) {
       return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     }
 
-    
 //make ajax call to get back 12 employees in json format
 $.ajax({
   url: 'https://randomuser.me/api/?results=12&nat=US',
@@ -57,21 +56,21 @@ $.ajax({
     const modalSetup = document.getElementsByClassName('modal');
 
     for (let i = 0; i < employeesList.length; i++) {
-      if (fullName.length > 14)  {
+      if (employeesList[i].fullName.length > 12)  {
         cardName[i].textContent = employeesList[i].fullName; 
         cardName[i].className += ' name-small';
       } else {
         cardName[i].textContent = employeesList[i].fullName;
       }
       
-      if (username.length > 16) {
+      if (employeesList[i].username.length > 16) {
         cardUsername[i].textContent = employeesList[i].username;
         cardUsername[i].className += ' username-small';
       } else {
         cardUsername[i].textContent = employeesList[i].username;
       }
        
-     if (city.length > 12) {
+     if (employeesList[i].city.length > 12) {
         cardCity[i].textContent = `${employeesList[i].city}, ${employeesList[i].country}`;
         cardCity[i].className += ' city-small'
       } else if (city.length > 18) {
@@ -86,7 +85,7 @@ $.ajax({
     const goBack = document.getElementById('leftButton');
       const goNext = document.getElementById('rightButton');
       let nameTest, nameTestMatch, counter;
-    for (let i=0; i < 12; i++) {
+    for (let i=0; i < employeesList.length; i++) {
       //create modals for each card
       card[i].addEventListener('click', () => {
         nameTest = employeesList[i].fullName;
@@ -107,7 +106,7 @@ $.ajax({
           })
     }
       goBack.addEventListener('click', () => {
-        for (let i = 0; i < 12; i ++) {
+        for (let i = 0; i < employeesList.length; i ++) {
           let nameTestMatch = employeesList[i].fullName;
           const innerModal = document.getElementById('pasteDataHere');
           if (nameTest == nameTestMatch) {
@@ -129,7 +128,7 @@ $.ajax({
       })
 
     goNext.addEventListener('click', () => {
-        for (let i = 0; i < 12; i ++) {
+        for (let i = 0; i < employeesList.length; i ++) {
           let nameTestMatch = employeesList[i].fullName;
           const innerModal = document.getElementById('pasteDataHere');
           if (nameTest == nameTestMatch) {
@@ -150,7 +149,7 @@ $.ajax({
         nameTest = employeesList[counter].fullName; 
       })
 
-  }
+  }//end success
 }); //end ajax call
 
 
@@ -187,4 +186,3 @@ buttonSearch.addEventListener('click', () => {
       card[i].style.display = '';
     }
 })
-
