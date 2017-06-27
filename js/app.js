@@ -42,9 +42,6 @@ $.ajax({
 //create a player object in each loop using all the necessary var to save all the values.
       employeesList.push(new person(image, fullName, birthday, username, city, country, email, telephone, address));
 
-// //print html
-//         $('#wrapper').append(fullWrapper);
-//         $('#wrapper').append(fullModal);
         card = document.getElementsByClassName('employee');
         
     })//loop ends
@@ -86,9 +83,11 @@ $.ajax({
     }//end for loop for cards
     const goBack = document.getElementById('leftButton');
       const goNext = document.getElementById('rightButton');
+      let nameTest, nameTestMatch;
     for (let i=0; i < 12; i++) {
       //create modals for each card
       card[i].addEventListener('click', () => {
+        nameTest = employeesList[i].fullName;
         const innerModal = document.getElementById('pasteDataHere');
           let modalData = `<div class="modal-body">
               <img src="${employeesList[i].image}" width="190" height="190" class="img-circle">
@@ -104,42 +103,47 @@ $.ajax({
             innerModal.innerHTML = modalData;
         // const buttonData = document.getElementById('pasteButtonsHere');
           })
-      
-
-      goBack.addEventListener('click', () => {
-        const innerModal = document.getElementById('pasteDataHere');
-        let counter = i - 1;
-          let modalData = `<div class="modal-body">
-              <img src="${employeesList[counter].image}" width="190" height="190" class="img-circle">
-              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[counter].fullName}</span></h3>
-              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[counter].email}</span></p>
-              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[counter].city}</span></p><hr>
-              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[counter].username}</span></p>
-              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[counter].telephone}</p>
-              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[counter].address}</span></p>
-              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[counter].birthday}</span></p>
-            </div>`
-            console.log(i-1);
-            innerModal.innerHTML = modalData;
-      })
-
-      goNext.addEventListener('click', () => {
-        const innerModal = document.getElementById('pasteDataHere');
-        let counter = index + 1;
-          let modalData = `<div class="modal-body">
-              <img src="${employeesList[counter].image}" width="190" height="190" class="img-circle">
-              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[counter].fullName}</span></h3>
-              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[counter].email}</span></p>
-              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[counter].city}</span></p><hr>
-              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[counter].username}</span></p>
-              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[counter].telephone}</p>
-              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[counter].address}</span></p>
-              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[counter].birthday}</span></p>
-            </div>`
-            console.log(i+1);
-            innerModal.innerHTML = modalData;
-      })
     }
+      goBack.addEventListener('click', () => {
+        for (let i = 0; i < 12; i ++) {
+          let nameTestMatch = employeesList[i].fullName;
+          const innerModal = document.getElementById('pasteDataHere');
+          if (nameTest == nameTestMatch) {
+            let modalData = `<div class="modal-body">
+              <img src="${employeesList[i-1].image}" width="190" height="190" class="img-circle">
+              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[i-1].fullName}</span></h3>
+              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[i-1].email}</span></p>
+              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[i-1].city}</span></p><hr>
+              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[i-1].username}</span></p>
+              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[i-1].telephone}</p>
+              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[i-1].address}</span></p>
+              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[i-1].birthday}</span></p>
+            </div>`
+            innerModal.innerHTML = modalData;
+          }
+        } 
+      })
+
+    goNext.addEventListener('click', () => {
+        for (let i = 0; i < 12; i ++) {
+          let nameTestMatch = employeesList[i].fullName;
+          const innerModal = document.getElementById('pasteDataHere');
+          if (nameTest == nameTestMatch) {
+            let modalData = `<div class="modal-body">
+              <img src="${employeesList[i+1].image}" width="190" height="190" class="img-circle">
+              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[i+1].fullName}</span></h3>
+              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[i+1].email}</span></p>
+              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[i+1].city}</span></p><hr>
+              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[i+1].username}</span></p>
+              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[i+1].telephone}</p>
+              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[i+1].address}</span></p>
+              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[i+1].birthday}</span></p>
+            </div>`
+            innerModal.innerHTML = modalData;
+          }
+        } 
+      })
+
   }
 }); //end ajax call
 
@@ -155,7 +159,7 @@ $('.form-horizontal').submit(function(event) {
 search.addEventListener('keyup', () => {
   let searchWord = search.value.toLowerCase();
   //hide all
-    for (let i = 0; i < employeesList.length; i++ ) {
+    for (let i = 0; i < employeesList.length; i++) {
       card[i].style.display = 'none';
     }
   //show only those meeting filter requirement
