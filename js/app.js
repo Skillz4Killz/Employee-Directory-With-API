@@ -20,6 +20,8 @@ let image, fullName, email, city, username, fullWrapper, modal, telephone, addre
 function capitalize(name) {
       return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     }
+
+    
 //make ajax call to get back 12 employees in json format
 $.ajax({
   url: 'https://randomuser.me/api/?results=12&nat=US',
