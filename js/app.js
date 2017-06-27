@@ -16,26 +16,6 @@ const info = $('.modal-title');
 
 let image, fullName, email, city, username, fullWrapper, modal, telephone, address, birthday, country, fullModal, card;
 
-//function to allow changing left and right of modals
-function leftOrRight() {
-  $('.modal').each(function(){
-    console.log('fun start');
-    let current = $(this);
-    //click next
-    current.find('.btn-next').click(function(){
-      current.modal('hide');
-      current.closest('.modal').nextAll('.modal').first().modal('show'); 
-      console.log('find next');
-    });
-    //click prev
-    current.find('.btn-prev').click(function(){
-      current.modal('hide');
-      current.closest('.modal').prevAll('.modal').first().modal('show');
-      console.log('find last');
-    });
-  });
-}
-
 //capitalize the name first letter
 function capitalize(name) {
       return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -143,9 +123,9 @@ $.ajax({
             innerModal.innerHTML = modalData;
       })
 
-      goNext.addEventListener('click', (i) => {
+      goNext.addEventListener('click', () => {
         const innerModal = document.getElementById('pasteDataHere');
-        let counter = i + 1;
+        let counter = index + 1;
           let modalData = `<div class="modal-body">
               <img src="${employeesList[counter].image}" width="190" height="190" class="img-circle">
               <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[counter].fullName}</span></h3>
