@@ -19,16 +19,19 @@ let image, fullName, email, city, username, fullWrapper, modal, telephone, addre
 //function to allow changing left and right of modals
 function leftOrRight() {
   $('.modal').each(function(){
+    console.log('fun start');
     let current = $(this);
     //click next
     current.find('.btn-next').click(function(){
       current.modal('hide');
       current.closest('.modal').nextAll('.modal').first().modal('show'); 
+      console.log('find next');
     });
     //click prev
     current.find('.btn-prev').click(function(){
       current.modal('hide');
       current.closest('.modal').prevAll('.modal').first().modal('show');
+      console.log('find last');
     });
   });
 }
@@ -73,13 +76,6 @@ $.ajax({
     const cardImage = document.getElementsByClassName('image');
     const modalLink = document.getElementsByClassName('modalLink');
     const modalSetup = document.getElementsByClassName('modal');
-    const nameSpan = document.getElementsByClassName('nameSpan');
-    const emailSpan = document.getElementsByClassName('emailSpan');
-    const citySpan = document.getElementsByClassName('citySpan');
-    const usernameSpan = document.getElementsByClassName('usernameSpan');
-    const cellSpan = document.getElementsByClassName('cellSpan');
-    const addressSpan = document.getElementsByClassName('addressSpan');
-    const birthdaySpan = document.getElementsByClassName('birthdaySpan');
 
     for (let i = 0; i < employeesList.length; i++) {
       if (fullName.length > 14)  {
@@ -107,30 +103,16 @@ $.ajax({
       }
 
       cardImage[i].src = employeesList[i].image;
-
-        // function makeModals(i) {
-        //   nameSpan.textContent = employeesList[i].fullName;
-        //   emailSpan.textContent = employeesList[i].email;
-        //   citySpan.textContent = employeesList[i].city;
-        //   usernameSpan.textContent = employeesList[i].username;
-        //   cellSpan.textContent = employeesList[i].telephone;
-        //   addressSpan.textContent = employeesList[i].address;
-        //   birthdaySpan.textContent = employeesList[i].birthday;
-        //   console.log(modalSetup[i]);
-        //   console.log(nameSpan);
-        //   console.log(emailSpan);
-        //   console.log(citySpan);
-        //   console.log(usernameSpan);
-        //   console.log(cellSpan);
-        //   console.log(addressSpan);
-        //   console.log(birthdaySpan);
-        // }
-    //create modals for each card
+    }//end for loop for cards
+    const goBack = document.getElementById('leftButton');
+      const goNext = document.getElementById('rightButton');
+    for (let i=0; i < 12; i++) {
+      //create modals for each card
       card[i].addEventListener('click', () => {
         const innerModal = document.getElementById('pasteDataHere');
           let modalData = `<div class="modal-body">
               <img src="${employeesList[i].image}" width="190" height="190" class="img-circle">
-              <h3 class="modal-title"><b>Full Name :</b><span class="nameSpan">${employeesList[i].fullName}</span></h3>
+              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[i].fullName}</span></h3>
               <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[i].email}</span></p>
               <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[i].city}</span></p><hr>
               <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[i].username}</span></p>
@@ -140,11 +122,46 @@ $.ajax({
             </div>`
             console.log(innerModal);
             innerModal.innerHTML = modalData;
+        // const buttonData = document.getElementById('pasteButtonsHere');
           })
-    }//end for loop for cards
+      
+
+      goBack.addEventListener('click', () => {
+        const innerModal = document.getElementById('pasteDataHere');
+        let counter = i - 1;
+          let modalData = `<div class="modal-body">
+              <img src="${employeesList[counter].image}" width="190" height="190" class="img-circle">
+              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[counter].fullName}</span></h3>
+              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[counter].email}</span></p>
+              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[counter].city}</span></p><hr>
+              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[counter].username}</span></p>
+              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[counter].telephone}</p>
+              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[counter].address}</span></p>
+              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[counter].birthday}</span></p>
+            </div>`
+            console.log(i-1);
+            innerModal.innerHTML = modalData;
+      })
+
+      goNext.addEventListener('click', (i) => {
+        const innerModal = document.getElementById('pasteDataHere');
+        let counter = i + 1;
+          let modalData = `<div class="modal-body">
+              <img src="${employeesList[counter].image}" width="190" height="190" class="img-circle">
+              <h3 class="modal-title"><b>Full Name : </b><span class="nameSpan">${employeesList[counter].fullName}</span></h3>
+              <p class="modal-title"><b>Email : </b><span class="emailSpan">${employeesList[counter].email}</span></p>
+              <p class="modal-title"><b>City : </b><span class="citySpan">${employeesList[counter].city}</span></p><hr>
+              <p class="modal-title"><b>Username : </b><span class="usernameSpan">${employeesList[counter].username}</span></p>
+              <p class="modal-title"><b>Cell : </b><span class="cellSpan"></span>${employeesList[counter].telephone}</p>
+              <p class="modal-title"><b>Address : </b><span class="addressSpan">${employeesList[counter].address}</span></p>
+              <p class="modal-title"><b>Birthday : </b><span class="birthdaySpan">${employeesList[counter].birthday}</span></p>
+            </div>`
+            console.log(i+1);
+            innerModal.innerHTML = modalData;
+      })
+    }
   }
 }); //end ajax call
-
 
 
 //create var necessary for search function
